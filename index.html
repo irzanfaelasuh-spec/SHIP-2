@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#070b1c">
+<title>Create Your Own Ship</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<section id="loading" class="screen"><div class="glass card"><h1>CREATE YOUR OWN SHIP</h1><p class="dim">Build your ship. Plan your mission. Explore the unknown.</p><div class="bar"><i id="prog"></i></div><p id="tip" class="dim"></p><p id="err" class="bad"></p><button id="bReload" class="btn hide">Coba lagi</button></div></section>
+
+<section id="menu" class="screen hide"><div class="glass card"><h1>CREATE YOUR OWN SHIP</h1><p class="dim">Build your ship. Plan your mission. Explore the unknown.</p>
+<button id="bPlay" class="btn pri">Play</button><button id="bCont" class="btn">Continue</button><button class="btn" data-open="controls">Controls</button><button class="btn" data-open="settings">Settings</button><button class="btn" data-open="credits">Credits</button></div></section>
+
+<section id="builder" class="hide">
+<div class="glass panel pl"><h2>Katalog komponen</h2><div id="tabs"></div><div id="parts"></div></div>
+<div class="glass panel pr"><h2>Status kapal</h2><div id="stats"></div><div id="issues"></div></div>
+<div class="glass dock"><select id="preset" aria-label="Kapal bawaan"></select><select id="dest" aria-label="Tujuan"></select><button id="bView" class="btn">Reset view</button><button id="bMenu" class="btn">Menu</button><button id="bLaunch" class="btn pri">Launch</button></div>
+</section>
+
+<section id="hud" class="hide">
+<div class="glass hp" id="vit"></div><div class="glass hp r" id="shp"></div>
+<div class="glass obj" id="obj"></div><div class="glass prompt hide" id="prompt"></div>
+<div class="top"><button class="btn sm" id="bMap">Map</button><button class="btn sm" id="bPause">Pause</button></div>
+<div class="glass rot">↻ Putar ke landscape</div>
+<div class="touch"><div class="pad"><button data-k="KeyW">▲</button><button data-k="KeyA">◀</button><button data-k="KeyD">▶</button><button data-k="KeyS">▼</button></div>
+<div class="acts"><button data-a="KeyE">ACT</button><button data-a="KeyR">FIX</button><button data-a="KeyX">WARP</button><button data-a="Digit1">Makan</button><button data-a="Digit2">Minum</button><button data-a="Digit3">O₂</button></div></div>
+</section>
+
+<div id="toast"></div><div id="flash" class="hide"></div>
+
+<div id="pause" class="modal hide"><div class="glass card"><h2>Pause</h2><button id="bRes" class="btn pri">Resume</button><button id="bPSet" class="btn">Settings</button><button id="bPMenu" class="btn">Main Menu</button></div></div>
+
+<div id="map" class="modal hide"><div class="glass card" style="width:min(560px,100%)"><h2>Peta misi</h2><div class="track" id="mapT"></div><div id="mapI"></div><button id="bMapX" class="btn pri">Tutup</button></div></div>
+
+<div id="over" class="modal hide"><div class="glass card"><h1 id="oT">GAME OVER</h1><p id="oC" class="dim"></p><button id="bRetry" class="btn pri">RETRY</button><button id="bOMenu" class="btn">MAIN MENU</button></div></div>
+
+<div id="settings" class="modal hide"><div class="glass card"><h2>Settings</h2>
+<label>Master volume<input id="sVol" type="range" min="0" max="1" step=".05"></label>
+<label>SFX volume<input id="sSfx" type="range" min="0" max="1" step=".05"></label>
+<label>Sensitivitas kontrol<input id="sSens" type="range" min=".4" max="2" step=".1"></label>
+<label>Kualitas grafis<select id="sQ"><option value="0">Low</option><option value="1">Medium</option><option value="2">High</option></select></label>
+<label>Mute<input id="sMute" type="checkbox"></label><label>Invert Y<input id="sInv" type="checkbox"></label><label>Camera shake<input id="sShake" type="checkbox"></label>
+<button id="bReset" class="btn">Reset default</button><button class="btn pri" data-close>Kembali</button></div></div>
+
+<div id="controls" class="modal hide"><div class="glass card" style="text-align:left"><h2>Controls</h2>
+<p><b>Penerbangan:</b> W/S throttle · A/D atau ←/→ belok · ↑/↓ pitch · drag mouse/layar untuk membidik · Space throttle 0 · X warp (hanya CRUISE & arah lurus)</p>
+<p><b>Permukaan:</b> WASD jalan · Shift lari · drag/panah untuk melihat</p>
+<p><b>Aksi:</b> E interaksi (mendarat, ambil sampel, masuk kapal) · R perbaiki · 1 makan · 2 minum · 3 tabung O₂ · M/Tab peta · Esc pause</p>
+<p class="dim">Arahkan hidung kapal ke cincin ◎. Kecepatan ≤ 5.5 u/s untuk orbit. Jupiter hanya flyby — tidak ada permukaan padat.</p>
+<button class="btn pri" data-close>Kembali</button></div></div>
+
+<div id="credits" class="modal hide"><div class="glass card"><h2>Credits</h2><p><b>Created by SHI2Pneverlose3</b></p>
+<p class="dim">Rakit kapal antariksa milikmu, siapkan persediaan, jelajahi tata surya, bertahan hidup di dunia asing, dan pulang dengan selamat. Setiap keputusan, setiap komponen, dan setiap tetes bahan bakar dapat menentukan nasib ekspedisi.</p>
+<p class="dim" style="font-size:.75rem">Suara sintetis (Web Audio), grafis prosedural, Three.js r128 via CDN. Jarak, waktu, dan fisika disederhanakan untuk gameplay.</p>
+<button class="btn pri" data-close>Kembali</button></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
